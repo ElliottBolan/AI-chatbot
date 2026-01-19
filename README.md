@@ -93,6 +93,31 @@ The backend server will run on `http://localhost:5000`
 
 The frontend will run on `http://localhost:3000`
 
+## Docker Deployment (Recommended)
+
+The easiest way to run the application is using Docker Compose:
+
+1. Make sure Docker and Docker Compose are installed
+2. Make sure Ollama is running on your host machine (`ollama serve`)
+3. Run the application:
+   ```bash
+   docker-compose up -d
+   ```
+
+The application will be available at:
+- Frontend: `http://localhost:3000`
+- Backend API: `http://localhost:5000`
+
+To stop the application:
+```bash
+docker-compose down
+```
+
+To view logs:
+```bash
+docker-compose logs -f
+```
+
 ## Usage
 
 1. Make sure Ollama is running (`ollama serve`)
@@ -225,6 +250,13 @@ AI-chatbot/
 - Clear browser cache
 - Delete `node_modules` and run `npm install` again
 
+### Docker Issues
+
+**Container cannot connect to Ollama**
+- Ensure Ollama is running on the host machine
+- On Linux, use `OLLAMA_API_URL=http://172.17.0.1:11434/api/generate`
+- On Mac/Windows, use `OLLAMA_API_URL=http://host.docker.internal:11434/api/generate` (default)
+
 ## Development
 
 ### Running Tests
@@ -270,7 +302,7 @@ This project is open source and available under the MIT License.
 - [ ] Export conversation history
 - [ ] Custom model selection in UI
 - [ ] Rate limiting and caching
-- [ ] Docker containerization
+- [x] Docker containerization
 
 ## Support
 

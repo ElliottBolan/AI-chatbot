@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: ai-chatbot-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - OLLAMA_API_URL=${OLLAMA_API_URL:-http://host.docker.internal:11434/api/generate}
+      - MODEL_NAME=${MODEL_NAME:-llama2}
+      - FLASK_DEBUG=${FLASK_DEBUG:-False}
+    networks:
+      - chatbot-network
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: ai-chatbot-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - chatbot-network
+    restart: unless-stopped
+
+networks:
+  chatbot-network:
+    driver: bridge
