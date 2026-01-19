@@ -5,7 +5,6 @@ function App() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
   const messagesEndRef = useRef(null);
   
   const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
@@ -27,7 +26,6 @@ function App() {
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     setIsLoading(true);
-    setError(null);
 
     try {
       const response = await fetch(`${API_URL}/api/chat`, {
@@ -53,7 +51,6 @@ function App() {
       
       setMessages(prev => [...prev, assistantMessage]);
     } catch (err) {
-      setError(err.message);
       const errorMessage = {
         role: 'assistant',
         content: `Error: ${err.message}. Please make sure the backend server is running.`,
@@ -71,7 +68,6 @@ function App() {
         method: 'POST',
       });
       setMessages([]);
-      setError(null);
     } catch (err) {
       console.error('Failed to reset conversation:', err);
     }
